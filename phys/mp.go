@@ -3,7 +3,9 @@ package phys
 import (
 	"bytes"
 	"fmt"
+	"os"
 	"os/exec"
+	"path/filepath"
 	"runtime"
 	"strings"
 )
@@ -62,33 +64,14 @@ func getUnixMountPoints() ([]string, error) {
 	return mountPoints, nil
 }
 
-// getWindowsMountPoints fetches mount points (drive letters) on Windows using 'wmic'.
+// getWindowsMountPoints enumerates drive letters from A: to Z: directly.
 func getWindowsMountPoints() ([]string, error) {
-	// Using wmic to get logical disk info. /format:csv makes it easier to parse.
-	cmd := exec.Command("wmic", "logicaldisk", "get", "Caption,Freespace,Size", "/format:csv")
-	var out bytes.Buffer
-	cmd.Stdout = &out
-	err := cmd.Run()
-	if err != nil {
-		return nil, fmt.Errorf("failed to run 'wmic logicaldisk get Caption,Freespace,Size /format:csv': %w", err)
-	}
-
-	lines := strings.Split(out.String(), "\n")
 	var mountPoints []string
-
-	// Skip first line (Node) and second line (header)
-	for i, line := range lines {
-		if i < 2 || strings.TrimSpace(line) == "" {
-			continue
-		}
-		// Example line: ",C:,26012720128,142998675456" (empty first field, Caption, Freespace, Size)
-		// We're interested in the second field (Caption) which is the drive letter.
-		fields := strings.Split(line, ",")
-		if len(fields) >= 2 {
-			driveLetter := strings.TrimSpace(fields[1])
-			if driveLetter != "" && strings.HasSuffix(driveLetter, ":") { // Ensure it's like "C:"
-				mountPoints = append(mountPoints, driveLetter+"\\") // Append backslash for Windows path
-			}
+	for c := 'A'; c <= 'Z'; c++ {
+		drive := string(c) + ":\\"
+		// 判断盘符是否存在（即路径存在）
+		if _, err := os.Stat(drive); err == nil {
+			mountPoints = append(mountPoints, filepath.Clean(drive)+"\\")
 		}
 	}
 	return mountPoints, nil
