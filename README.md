@@ -20,4 +20,10 @@ _注意：使用前建议将rclone和rsdish添加到PATH_
 
 _注意：rsdish中的sync概念更类似于rclone中的copy的概念，同属于一个library的volume会相互发送彼此没有的文件，而不是删除对方没有的文件。如果你想要删除某个文件，详情见“删除文件”_
 
-1. 运行`rsdish sync`或者`rsdish sync <>`
+1. 运行`rsdish sync`或者`rsdish sync --library <UUID>/<SHORT>`
+
+这会在当前文件夹生成一个sh脚本（linux和macos），或者一个bat脚本（windows），这个脚本包含同步library所需要的rclone命令
+
+### 收藏library
+
+library的uuid每次都要复制比较麻烦，这时候可以使用rsdish collect功能。运行`rsdish collect add/remove <SHORT> <UUID>`可以将shortname和uuid关联起来，从而简化命令。
