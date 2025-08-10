@@ -55,7 +55,11 @@ func LinkAll(srcPath string, dstPath string, linkCreate string) error {
 				}
 
 				// If it's a real file, we consider it a duplicate and do nothing
-				fmt.Printf("File '%s' already exists at destination, skipping.\n", dstFilePath)
+				if len(string(content)) < 20 {
+					fmt.Printf("File '%s' already exists at destination, skipping. content: %s\n", dstFilePath, string(content))
+				} else {
+					fmt.Printf("File '%s' already exists at destination, skipping.\n", dstFilePath)
+				}
 				return nil
 			}
 
