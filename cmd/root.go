@@ -35,4 +35,5 @@ func init() {
 	rootCmd.AddCommand(scanCmd)
 	rootCmd.AddCommand(syncCmd)
 	rootCmd.AddCommand(dropCmd)
+	rootCmd.AddCommand(linkCmd)
 }

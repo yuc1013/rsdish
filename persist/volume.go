@@ -31,7 +31,7 @@ type VolumeSection struct {
 // Fields are marked 'omitempty' because they can be optional in the TOML.
 type AdvancedSection struct {
 	RcloneArguments string `toml:"rclone_arguments,omitempty"` // Now optional in TOML
-	LinkCreat       string `toml:"link_creat,omitempty"`       // Now optional in TOML
+	LinkCreate      string `toml:"link_create,omitempty"`      // Now optional in TOML
 }
 
 // SaveTomlConfig writes any TOML-serializable struct to the specified path.

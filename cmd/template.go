@@ -42,7 +42,7 @@ func GenerateVolumeTemplate(libraryUUID string) *persist.VolumeConfig {
 		},
 		Advanced: persist.AdvancedSection{ // Reintroduce and populate the advanced section
 			RcloneArguments: "",
-			LinkCreat:       "none", // Default link creation type
+			LinkCreate:      "none", // Default link creation type
 		},
 	}
 }

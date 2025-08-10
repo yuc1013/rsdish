@@ -153,12 +153,12 @@ func validateVolumeConfig(cfg *persist.VolumeConfig) error {
 	// No specific validation needed as it's an example string and optional.
 
 	// 5. Validate 'advanced.link_creat' (Optional, but if present, must be specific values)
-	if cfg.Advanced.LinkCreat != "" { // Only validate if the field is present/not empty
-		switch cfg.Advanced.LinkCreat {
+	if cfg.Advanced.LinkCreate != "" { // Only validate if the field is present/not empty
+		switch cfg.Advanced.LinkCreate {
 		case "none", "symlink", "cheatfile":
 			// Valid link creation types
 		default:
-			return fmt.Errorf("volume config has invalid 'advanced.link_creat': '%s'. Must be 'none', 'symlink', or 'cheatfile'", cfg.Advanced.LinkCreat)
+			return fmt.Errorf("volume config has invalid 'advanced.link_creat': '%s'. Must be 'none', 'symlink', or 'cheatfile'", cfg.Advanced.LinkCreate)
 		}
 	}
 	// If cfg.Advanced.LinkCreat is empty, it's considered valid because it's optional.
