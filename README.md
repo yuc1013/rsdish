@@ -27,3 +27,18 @@ _注意：rsdish中的sync概念更类似于rclone中的copy的概念，同属�
 ### 收藏library
 
 library的uuid每次都要复制比较麻烦，这时候可以使用rsdish collect功能。运行`rsdish collect add/remove <SHORT> <UUID>`可以将shortname和uuid关联起来，从而简化命令。
+
+### 删除文件
+
+延迟同步的难点之一在于一致地删除文件。某种意义上来说，添加了一个文件和还没有删除这个文件是无法区分的。所以，rsdish把删除的决策责任交给用户。当运行rsdish drop <Relative FilePath> --from <UUID>/<short>时，会生成从该library所有已知volume删除该相对路径文件的脚本。_注意：没有连接的存储库的删除脚本不会生成，文件也不会被删除。_
+
+## 高级
+
+**警告：高级命令可能直接操作你的文件并造成不可逆结果。**
+
+### 链接
+
+在volume.toml中添加advanced.link_create("none"/"symlink"/"cheatfile")可以指定该存储库为本体不位于该存储库的文件创建symlink或cheatfile（一个文件名与源文件相同的纯文本文件）。注意事项：
+1. 符号链接的创建需要管理员权限，如果你是windows操作系统，需要在"设置"->"系统"->"开发者选项"->"启用sudo"进行设置；
+2. 一般来说，可以在主磁盘存储library的元数据文件（例如小于10KB的文件和图片文件），然后将link_create设置为symlink或cheatfile来供软件刮削数据；
+3. exFAT等扁平文件系统没有符号链接支持，在设置前注意查看你的存储库所在分区的文件系统；
