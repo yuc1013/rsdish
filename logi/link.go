@@ -29,7 +29,7 @@ func LinkLibrary(uuid string, dryRun bool) error {
 			}
 
 			linkCreateMode := dstVol.Config.Advanced.LinkCreate
-			if linkCreateMode == "none" {
+			if linkCreateMode == "none" || linkCreateMode == "" {
 				log.Printf("Skipping link from '%s' to '%s' as link_create is 'none'.", srcVol.BasePath, dstVol.BasePath)
 				continue
 			}

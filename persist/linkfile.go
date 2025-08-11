@@ -58,7 +58,7 @@ func LinkAll(srcPath string, dstPath string, linkCreate string) error {
 				if len(string(content)) < 20 {
 					fmt.Printf("File '%s' already exists at destination, skipping. content: %s\n", dstFilePath, string(content))
 				} else {
-					fmt.Printf("File '%s' already exists at destination, skipping.\n", dstFilePath)
+					fmt.Printf("File '%s' already exists at destination, skipping. len: %d\n", dstFilePath, len(string(content)))
 				}
 				return nil
 			}
